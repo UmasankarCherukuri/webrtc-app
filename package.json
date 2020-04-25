@@ -8,6 +8,7 @@
     "@types/socket.io": "^2.1.4"
   },
   "dependencies": {
+    "@types/node": "^13.13.2",
     "express": "^4.17.1",
     "http": "0.0.1-security",
     "nodemon": "1.19.4",
