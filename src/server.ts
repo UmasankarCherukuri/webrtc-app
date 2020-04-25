@@ -10,7 +10,7 @@ export class Server {
 
   private activeSockets: string[] = [];
 
-  private readonly DEFAULT_PORT = 5000;
+  private readonly DEFAULT_PORT = process.env.PORT || 5000;
 
   constructor() {
     this.initialize();
@@ -37,9 +37,9 @@ export class Server {
   }
 
   private handleSocketConnection(): void {
-    this.io.on("connection", socket => {
+    this.io.on("connection", (socket) => {
       const existingSocket = this.activeSockets.find(
-        existingSocket => existingSocket === socket.id
+        (existingSocket) => existingSocket === socket.id
       );
 
       if (!existingSocket) {
@@ -47,41 +47,41 @@ export class Server {
 
         socket.emit("update-user-list", {
           users: this.activeSockets.filter(
-            existingSocket => existingSocket !== socket.id
-          )
+            (existingSocket) => existingSocket !== socket.id
+          ),
         });
 
         socket.broadcast.emit("update-user-list", {
-          users: [socket.id]
+          users: [socket.id],
         });
       }
 
       socket.on("call-user", (data: any) => {
         socket.to(data.to).emit("call-made", {
           offer: data.offer,
-          socket: socket.id
+          socket: socket.id,
         });
       });
 
-      socket.on("make-answer", data => {
+      socket.on("make-answer", (data) => {
         socket.to(data.to).emit("answer-made", {
           socket: socket.id,
-          answer: data.answer
+          answer: data.answer,
         });
       });
 
-      socket.on("reject-call", data => {
+      socket.on("reject-call", (data) => {
         socket.to(data.from).emit("call-rejected", {
-          socket: socket.id
+          socket: socket.id,
         });
       });
 
       socket.on("disconnect", () => {
         this.activeSockets = this.activeSockets.filter(
-          existingSocket => existingSocket !== socket.id
+          (existingSocket) => existingSocket !== socket.id
         );
         socket.broadcast.emit("remove-user", {
-          socketId: socket.id
+          socketId: socket.id,
         });
       });
     });
