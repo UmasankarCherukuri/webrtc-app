@@ -78,6 +78,7 @@ socket.on("remove-user", ({ socketId }) => {
 });
 
 socket.on("call-made", async (data) => {
+  console.log("on call-made", "getCalled=", getCalled);
   if (getCalled) {
     const confirmed = confirm(
       `User "Socket: ${data.socket}" wants to call you. Do accept this call?`
