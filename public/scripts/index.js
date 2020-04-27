@@ -5,7 +5,9 @@ const existingCalls = [];
 
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
-const peerConnection = new RTCPeerConnection();
+const peerConnection = new RTCPeerConnection({
+  iceServers: [{ url: "stun:global.stun.twilio.com:3478?transport=udp" }],
+});
 
 function unselectUsersFromList() {
   const alreadySelectedUser = document.querySelectorAll(
