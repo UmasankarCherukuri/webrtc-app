@@ -13,7 +13,7 @@
     "http": "0.0.1-security",
     "nodemon": "1.19.4",
     "path": "0.12.7",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.5.0",
     "ts-node": "^8.9.0",
     "typescript": "^3.8.3"
   },
